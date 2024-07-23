@@ -1,15 +1,4 @@
-spring:
-  security:
-    saml2:
-      relyingparty:
-        registration:
-          okta:
-            assertingparty:
-              metadata-uri: https://dev-98822192.okta.com/app/exkia77455ZN7RYBS5d7/sso/saml/metadata
-            signing:
-              credentials:
-                - private-key-location: classpath:local.key
-                  certificate-location: classpath:local.crt
-            singlelogout:
-              binding: POST
-              response-url: "{baseUrl}/logout/saml2/slo"
+logging.level.org.springframework.security.web.FilterChainProxy: DEBUG
+logging.level.org.springframework.security: TRACE
+spring.security.user.name: shri
+spring.security.user.password: 12345
