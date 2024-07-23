@@ -30,26 +30,25 @@ import java.security.interfaces.RSAPrivateKey;
 public class SecurityConfiguration {
 
 /*
-User: testuser2@spring.security.saml
+User: testuser2@spring.security.saml   //for https://dev-05937739.okta.com/app/exk4842vmapcMkohr5d7/sso/saml/metadata IDP
 Password: 12345678
+
+user: user@abc.com
+pass:test@123
+
+user: test@test.com
+pass:shri@123
  */
 
     /*oidc*/
     @Bean
     @Order(1)
     SecurityFilterChain app(HttpSecurity http) throws Exception {
-        http.securityMatcher("/api/**")
+        http.securityMatcher("/**")
                 .authorizeHttpRequests((authorize) -> authorize
                         .anyRequest().authenticated()
                 )
-                .saml2Login(
-
-                        saml2 -> saml2
-                                .loginProcessingUrl("/api/saml2/response/{registrationId}")
-                                .authenticationRequestUri("/api/saml2/request/{registrationId}")
-
-
-                )
+                .saml2Login(Customizer.withDefaults())
                 .saml2Logout(Customizer.withDefaults());
         return http.build();
     }
@@ -58,15 +57,13 @@ Password: 12345678
     @Order(2)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
-        http.securityMatcher("/zxz**")
+        http.securityMatcher("/other/**")
                 .authorizeHttpRequests((authorize) -> authorize
                 .anyRequest().authenticated()
         )
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
         return http.build();
-
-
     }
     @Bean
     RelyingPartyRegistrationResolver relyingPartyRegistrationResolver( RelyingPartyRegistrationRepository registrations) {
