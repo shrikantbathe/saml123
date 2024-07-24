@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 
-    @RequestMapping("/")
+    @RequestMapping("/app/data")
     public String home(@AuthenticationPrincipal Saml2AuthenticatedPrincipal principal, Model model) {
         model.addAttribute("name", principal.getName());
         model.addAttribute("emailAddress", principal.getFirstAttribute("email"));

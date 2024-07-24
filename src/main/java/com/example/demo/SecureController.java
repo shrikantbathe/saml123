@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class SecureController {
 
-    @GetMapping("/ASDASD")
+    @GetMapping("/app")
     public String main() {
 
         return "secure.html";

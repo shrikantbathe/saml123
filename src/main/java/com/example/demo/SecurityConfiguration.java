@@ -44,8 +44,9 @@ pass:shri@123
     @Bean
     @Order(1)
     SecurityFilterChain app(HttpSecurity http) throws Exception {
-        http.securityMatcher("/**")
+        http
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/login1").permitAll()
                         .anyRequest().authenticated()
                 )
                 .saml2Login(Customizer.withDefaults())
@@ -53,22 +54,10 @@ pass:shri@123
         return http.build();
     }
 
-    @Bean
-    @Order(2)
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-
-        http.securityMatcher("/other/**")
-                .authorizeHttpRequests((authorize) -> authorize
-                .anyRequest().authenticated()
-        )
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults());
-        return http.build();
-    }
-    @Bean
-    RelyingPartyRegistrationResolver relyingPartyRegistrationResolver( RelyingPartyRegistrationRepository registrations) {
-        return new DefaultRelyingPartyRegistrationResolver((id) -> registrations.findByRegistrationId("okta"));
-    }
+//    @Bean
+//    RelyingPartyRegistrationResolver relyingPartyRegistrationResolver( RelyingPartyRegistrationRepository registrations) {
+//        return new DefaultRelyingPartyRegistrationResolver((id) -> registrations.findByRegistrationId("okta"));
+//    }
 
     @Bean
     Saml2AuthenticationTokenConverter authentication(RelyingPartyRegistrationResolver registrations) {
